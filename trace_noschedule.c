@@ -446,10 +446,12 @@ static int trace_nosched_register_tp(void)
 			pr_err("sched trace: can not activate tracepoint "
 			       "probe to %s with error code: %d\n",
 			       entry->name, ret);
-			while (i--)
+			while (i--) {
+				entry = info->tp_entries + i;
 				tracepoint_probe_unregister(entry->tp,
 							    entry->probe,
 							    info->stack_trace);
+			}
 			return ret;
 		}
 	}
